@@ -28,6 +28,7 @@ test("Tutorial App", async ({ browser }) => {
   // clear username and input the correct value
   await username.fill("");
   await username.fill("rahulshettyacademy");
+  await username.fill("rahulshettyacademy");
 
   // login
   await signBtn.click();
