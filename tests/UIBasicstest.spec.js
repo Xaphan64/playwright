@@ -113,4 +113,6 @@ test.only("Child windows (other tab)", async ({ browser }) => {
   await page.locator("#username").type(domain);
 
   console.log(await page.locator("#username").inputValue());
+
+  console.log(`test`);
 });
