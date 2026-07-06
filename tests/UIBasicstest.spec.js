@@ -81,7 +81,7 @@ test("UI Controls", async ({ page }) => {
   // await page.pause();
 });
 
-test.only("Child windows (other tab)", async ({ browser }) => {
+test("Child windows (other tab)", async ({ browser }) => {
   // opens fresh browser (like incognito without cookies)
   const context = await browser.newContext();
 
