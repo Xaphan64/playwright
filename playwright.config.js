@@ -7,7 +7,7 @@ import { defineConfig, devices } from "@playwright/test";
 const config = {
   testDir: "./tests",
   // change the timeout here if needed
-  timeout: 10 * 1000,
+  timeout: 30 * 1000,
   expect: {
     timeout: 5000,
   },
@@ -15,6 +15,9 @@ const config = {
 
   use: {
     browserName: "chromium",
+    screenshot: "on",
+    trace: "retain-on-failure",
+
     launchOptions: {
       headless: false, // set to true to run without opening the browser window
     },

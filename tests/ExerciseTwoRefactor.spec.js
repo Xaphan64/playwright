@@ -59,7 +59,7 @@ test("Exercise Two refactored", async ({ page }) => {
 
   // get the proper text and get the transaction uuid
   expect(page.getByText(" Thankyou for the order.")).toBeVisible();
-  const rawLabel = await page.locator("label.ng-star-inserted").textContent();
+  const rawLabel = await page.locator("label.ng-star-inserted").first().textContent();
   const orderId = rawLabel.replace(/\|/g, "").trim();
   console.log(orderId);
 

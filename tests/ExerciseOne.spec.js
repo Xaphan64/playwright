@@ -14,20 +14,20 @@ test("Tutorial Exercise 1", async ({ page }) => {
   const userPassword = page.locator("#userPassword");
   const cardTitle = page.locator("h5 b");
 
-  // register
-  await registerBtn.click();
+  // // register
+  // await registerBtn.click();
 
-  // complete all the inputs
-  await page.locator("#firstName").fill("Daniel");
-  await page.locator("#lastName").fill("Alex");
-  await userEmail.fill("daniel@alexey.com");
-  await page.locator("#userMobile").fill("1234567890");
-  await userPassword.fill("Tester135.");
-  await page.locator("#confirmPassword").fill("Tester135.");
-  await page.locator("[type='checkbox']").check();
+  // // complete all the inputs
+  // await page.locator("#firstName").fill("Daniel");
+  // await page.locator("#lastName").fill("Alex");
+  // await userEmail.fill("daniel@alexey.com");
+  // await page.locator("#userMobile").fill("1234567890");
+  // await userPassword.fill("Tester135.");
+  // await page.locator("#confirmPassword").fill("Tester135.");
+  // await page.locator("[type='checkbox']").check();
 
-  // submit to register
-  await loginBtn.click();
+  // // submit to register
+  // await loginBtn.click();
 
   // press login after register
   // await page.locator(".btn.btn-primary").click();

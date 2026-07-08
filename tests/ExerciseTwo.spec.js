@@ -76,7 +76,7 @@ test("Exercise Two", async ({ page }) => {
 
   // get the proper text and get the transaction uuid
   expect(page.locator(".hero-primary")).toHaveText(" Thankyou for the order.");
-  const orderId = await page.locator(".em-spacer-1 .ng-star-inserted").textContent();
+  const orderId = await page.locator(".em-spacer-1 .ng-star-inserted").first().textContent();
   console.log(orderId);
 
   // go to orders history page
