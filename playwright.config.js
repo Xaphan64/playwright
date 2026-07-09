@@ -7,7 +7,7 @@ import { defineConfig, devices } from "@playwright/test";
 const config = {
   testDir: "./tests",
   // change the timeout here if needed
-  timeout: 30 * 1000,
+  timeout: 20 * 1000,
   expect: {
     timeout: 5000,
   },
