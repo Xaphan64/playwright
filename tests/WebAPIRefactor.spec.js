@@ -48,5 +48,6 @@ test("Login", async ({ page }) => {
   // check that the same info is present there
   const orderIdDetails = await page.locator(".col-text").textContent();
 
+  // check that the created order exists in the orders
   expect(response.orderId.includes(orderIdDetails)).toBeTruthy();
 });
