@@ -7,6 +7,8 @@ let passField;
 let confirmPassField;
 let registerBtn;
 let redirectBtn;
+let wrongPassError;
+let matchPassError;
 
 async function handleValidation(field) {
   return await field.evaluate((el) => el.validationMessage);
@@ -29,6 +31,13 @@ test.beforeEach(async ({ page }) => {
   confirmPassField = page.locator("[name='confirmPassword']");
   registerBtn = page.getByRole("button", { name: "Create Account" });
   redirectBtn = page.getByRole("button", { name: "Already have an account?" });
+  wrongPassError = page.locator(".error-message").filter({
+    hasText:
+      "Password must be min 8 characters, and contain at least one uppercase letter, one lower case letter and a digit",
+  });
+  matchPassError = page
+    .locator(".error-message")
+    .filter({ hasText: "Password and confirm password does not match" });
 });
 
 // Register valid scenarios
@@ -57,10 +66,10 @@ test("username empty", async ({ page }) => {
   // press submit button to register
   await registerBtn.click();
 
-  // check if browser error message is present
+  // define the error message
   const message = await handleValidation(usernameField);
 
-  // check if browser error message is truthy
+  // check if browser error message is present
   expect(message).toBeTruthy();
 });
 
@@ -74,10 +83,10 @@ test("email empty", async ({ page }) => {
   // press submit button to register
   await registerBtn.click();
 
-  // check if browser error message is present
+  // define the error message
   const message = await handleValidation(emailField);
 
-  // check if browser error message is truthy
+  // check if browser error message is present
   expect(message).toBeTruthy();
 });
 
@@ -91,10 +100,10 @@ test("wrong email format", async ({ page }) => {
   // press submit button to register
   await registerBtn.click();
 
-  // check if browser error message is present
+  // define the error message
   const message = await handleValidation(emailField);
 
-  // check if browser error message is truthy
+  // check if browser error message is present
   expect(message).toBeTruthy();
 });
 
@@ -108,10 +117,10 @@ test("empty password", async ({ page }) => {
   // press submit button to register
   await registerBtn.click();
 
-  // check if browser error message is present
+  // define the error message
   const message = await handleValidation(passField);
 
-  // check if browser error message is truthy
+  // check if browser error message is present
   expect(message).toBeTruthy();
 });
 
@@ -126,12 +135,7 @@ test("short password", async ({ page }) => {
   await registerBtn.click();
 
   // check if the proper error appears
-  await expect(
-    page.locator(".error-message").filter({
-      hasText:
-        "Password must be min 8 characters, and contain at least one uppercase letter, one lower case letter and a digit",
-    }),
-  ).toBeVisible();
+  await expect(wrongPassError).toBeVisible();
 });
 
 test("no uppercase password", async ({ page }) => {
@@ -145,12 +149,7 @@ test("no uppercase password", async ({ page }) => {
   await registerBtn.click();
 
   // check if the proper error appears
-  await expect(
-    page.locator(".error-message").filter({
-      hasText:
-        "Password must be min 8 characters, and contain at least one uppercase letter, one lower case letter and a digit",
-    }),
-  ).toBeVisible();
+  await expect(wrongPassError).toBeVisible();
 });
 
 test("no loweracse password", async ({ page }) => {
@@ -164,12 +163,7 @@ test("no loweracse password", async ({ page }) => {
   await registerBtn.click();
 
   // check if the proper error appears
-  await expect(
-    page.locator(".error-message").filter({
-      hasText:
-        "Password must be min 8 characters, and contain at least one uppercase letter, one lower case letter and a digit",
-    }),
-  ).toBeVisible();
+  await expect(wrongPassError).toBeVisible();
 });
 
 test("no digit password", async ({ page }) => {
@@ -183,12 +177,7 @@ test("no digit password", async ({ page }) => {
   await registerBtn.click();
 
   // check if the proper error appears
-  await expect(
-    page.locator(".error-message").filter({
-      hasText:
-        "Password must be min 8 characters, and contain at least one uppercase letter, one lower case letter and a digit",
-    }),
-  ).toBeVisible();
+  await expect(wrongPassError).toBeVisible();
 });
 
 test("empty confirm password", async ({ page }) => {
@@ -201,10 +190,10 @@ test("empty confirm password", async ({ page }) => {
   // press submit button to register
   await registerBtn.click();
 
-  // check if browser error message is present
+  // define the error message
   const message = await handleValidation(confirmPassField);
 
-  // check if browser error message is truthy
+  // check if browser error message is present
   expect(message).toBeTruthy();
 });
 
@@ -219,7 +208,13 @@ test("confirm password not the same with password", async ({ page }) => {
   await registerBtn.click();
 
   // check if the proper error appears
-  await expect(
-    page.locator(".error-message").filter({ hasText: "Password and confirm password does not match" }),
-  ).toBeVisible();
+  await expect(matchPassError).toBeVisible();
+});
+
+test("redirect button test", async ({ page }) => {
+  // redirect to login page
+  await redirectBtn.click();
+
+  // check if the user was redirected
+  expect(page.locator(".login-header").filter({ hasText: "Login Page" })).toBeVisible();
 });
