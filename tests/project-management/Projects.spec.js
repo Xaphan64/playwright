@@ -46,7 +46,7 @@ test.beforeEach(async ({ page }) => {
   // go to projects page
   await projectsTab.click();
 
-  // check if redirected to login page after succesfully registered
+  // check if redirected to projects page page after succesfully logged in
   expect(page.locator(".header-page-title").filter({ hasText: "Projects Page" })).toBeVisible();
 });
 
@@ -64,8 +64,27 @@ async function handleCreateProject(name, description, start, end) {
   await createBtn.click();
 }
 
+async function handleChangeStatus(number, status, page) {
+  // get the project and press edit
+  await page
+    .locator(".project-card-container")
+    .nth(number)
+    .locator(".project-card-footer")
+    .getByRole("button", { name: "Edit" })
+    .click();
+
+  // wait for edit inputs to be populated
+  await expect(page.locator("[name='title']")).not.toHaveValue("");
+
+  // change the status
+  await page.locator("[name='status']").selectOption({ value: status });
+
+  // update the project
+  await page.getByRole("button", { name: "Update" }).click();
+}
+
 // valid scenarios
-test("create multiple projects and persons and check if they appear in dashboard", async ({ page }) => {
+test("dashboard projects test", async ({ page }) => {
   // go to In Progress tab
   await inProgressBtn.click();
 
@@ -111,11 +130,50 @@ test("create multiple projects and persons and check if they appear in dashboard
   const doneDash = await page.locator(".dashboard-card-number").nth(2).textContent();
 
   // verify that the proper number of projects appear in the dasboard page
-  expect(progressNumber == progressDash).toBeTruthy();
-  expect(pendingNumber == pendingDash).toBeTruthy();
-  expect(doneNumber == doneDash).toBeTruthy();
-
-  //   await page.pause();
+  expect(parseInt(progressDash)).toBe(progressNumber);
+  expect(parseInt(pendingDash)).toBe(pendingNumber);
+  expect(parseInt(doneDash)).toBe(doneNumber);
 });
+
+test("change status test", async ({ page }) => {
+  // go to In Progress tab
+  await inProgressBtn.click();
+
+  // create projects
+  await handleCreateProject("testOne", "description pending", "2026-01-01", "2027-01-01");
+  await handleCreateProject("testTwo", "description done", "2026-01-01", "2027-01-01");
+  await handleCreateProject("testThree", "description pending", "2026-01-01", "2027-01-01");
+  await handleCreateProject("testFour", "description pending", "2026-01-01", "2027-01-01");
+  await handleCreateProject("testFive", "description pending", "2026-01-01", "2027-01-01");
+  await handleCreateProject("testSix", "description done", "2026-01-01", "2027-01-01");
+  await handleCreateProject("testSeven", "description progress", "2026-01-01", "2027-01-01");
+  await handleCreateProject("testEight", "description progress", "2026-01-01", "2027-01-01");
+  await handleCreateProject("testNine", "description progress", "2026-01-01", "2027-01-01");
+
+  // edit statuses
+  await handleChangeStatus(0, "pending", page);
+  await handleChangeStatus(0, "done", page);
+  await handleChangeStatus(0, "pending", page);
+  await handleChangeStatus(0, "pending", page);
+  await handleChangeStatus(0, "pending", page);
+  await handleChangeStatus(0, "done", page);
+
+  const progressNumber = await page.locator(".project-card-container").count();
+  expect(progressNumber).toBe(3);
+
+  // go to pending tab
+  await pendingBtn.click();
+
+  const pendingNumber = await page.locator(".project-card-container").count();
+  expect(pendingNumber).toBe(4);
+
+  // go to done page
+  await doneBtn.click();
+
+  const doneNumber = await page.locator(".project-card-container").count();
+  expect(doneNumber).toBe(2);
+});
+
+test("delete project test", async ({ page }) => {});
 
 // invalid scenarios (on inputs when creating project)
