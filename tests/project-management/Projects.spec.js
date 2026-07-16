@@ -83,6 +83,41 @@ async function handleChangeStatus(number, status, page) {
   await page.getByRole("button", { name: "Update" }).click();
 }
 
+// async function handleDeleteProject(number, page) {
+//   // get the project and press delete
+//   await page
+//     .locator(".project-card-container")
+//     .nth(number)
+//     .locator(".project-card-footer")
+//     .getByRole("button", { name: "Delete" })
+//     .click();
+
+//   // wait
+//   await page.waitForTimeout(300);
+
+//   // confirm deleting the project
+//   await page.getByRole("button", { name: "Yes" }).click();
+// }
+
+async function handleDeleteProject(number, page) {
+  // get the project and press delete
+  await page
+    .locator(".project-card-container")
+    .nth(number)
+    .locator(".project-card-footer")
+    .getByRole("button", { name: "Delete" })
+    .click();
+  // scope to the confirmation modal
+  const confirmModal = page.locator(".project-modal-container.confirmation");
+  await expect(confirmModal).toBeVisible();
+  // confirm deleting the project
+  await confirmModal.getByRole("button", { name: "Yes" }).click();
+  // wait explicitly for the modal to disappear (confirms app processed the click)
+  await expect(confirmModal).not.toBeVisible({ timeout: 5000 });
+  // wait explicitly for the card count to actually decrease (confirms localStorage + re-render happened)
+  await expect(page.locator(".project-card-container")).toHaveCount(number, { timeout: 5000 });
+}
+
 // valid scenarios
 test("dashboard projects test", async ({ page }) => {
   // go to In Progress tab
@@ -158,22 +193,43 @@ test("change status test", async ({ page }) => {
   await handleChangeStatus(0, "pending", page);
   await handleChangeStatus(0, "done", page);
 
+  // count progress and check
   const progressNumber = await page.locator(".project-card-container").count();
   expect(progressNumber).toBe(3);
 
   // go to pending tab
   await pendingBtn.click();
 
+  // count pending and check
   const pendingNumber = await page.locator(".project-card-container").count();
   expect(pendingNumber).toBe(4);
 
   // go to done page
   await doneBtn.click();
 
+  // count done and check
   const doneNumber = await page.locator(".project-card-container").count();
   expect(doneNumber).toBe(2);
 });
 
-test("delete project test", async ({ page }) => {});
+test("delete project test", async ({ page }) => {
+  // go to In Progress tab
+  await inProgressBtn.click();
+
+  // create projects
+  await handleCreateProject("testOne", "description test", "2026-01-01", "2027-01-01");
+
+  // check the number of projects
+  const projectsNumber = await page.locator(".project-card-container").count();
+  expect(projectsNumber).toBe(1);
+
+  console.log(await page.evaluate(() => JSON.stringify(localStorage)));
+
+  // // delete the projects
+  await handleDeleteProject(0, page);
+
+  // check if there are 0 projects
+  expect(projectsNumber).toBe(0);
+});
 
 // invalid scenarios (on inputs when creating project)
