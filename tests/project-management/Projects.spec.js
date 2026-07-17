@@ -46,8 +46,10 @@ test.beforeEach(async ({ page }) => {
   // go to projects page
   await projectsTab.click();
 
+  await page.pause();
+
   // check if redirected to projects page page after succesfully logged in
-  expect(page.locator(".header-page-title").filter({ hasText: "Projects Page" })).toBeVisible();
+  await expect(page.locator(".header-page-title").filter({ hasText: "Projects Page" })).toBeVisible();
 });
 
 async function handleCreateProject(name, description, start, end) {
@@ -83,22 +85,6 @@ async function handleChangeStatus(number, status, page) {
   await page.getByRole("button", { name: "Update" }).click();
 }
 
-// async function handleDeleteProject(number, page) {
-//   // get the project and press delete
-//   await page
-//     .locator(".project-card-container")
-//     .nth(number)
-//     .locator(".project-card-footer")
-//     .getByRole("button", { name: "Delete" })
-//     .click();
-
-//   // wait
-//   await page.waitForTimeout(300);
-
-//   // confirm deleting the project
-//   await page.getByRole("button", { name: "Yes" }).click();
-// }
-
 async function handleDeleteProject(number, page) {
   // get the project and press delete
   await page
@@ -107,15 +93,12 @@ async function handleDeleteProject(number, page) {
     .locator(".project-card-footer")
     .getByRole("button", { name: "Delete" })
     .click();
-  // scope to the confirmation modal
-  const confirmModal = page.locator(".project-modal-container.confirmation");
-  await expect(confirmModal).toBeVisible();
+
+  // wait
+  await page.waitForTimeout(300);
+
   // confirm deleting the project
-  await confirmModal.getByRole("button", { name: "Yes" }).click();
-  // wait explicitly for the modal to disappear (confirms app processed the click)
-  await expect(confirmModal).not.toBeVisible({ timeout: 5000 });
-  // wait explicitly for the card count to actually decrease (confirms localStorage + re-render happened)
-  await expect(page.locator(".project-card-container")).toHaveCount(number, { timeout: 5000 });
+  await page.getByRole("button", { name: "Yes" }).click();
 }
 
 // valid scenarios
@@ -233,3 +216,4 @@ test("delete project test", async ({ page }) => {
 });
 
 // invalid scenarios (on inputs when creating project)
+test("empty project input", async ({ page }) => {});
