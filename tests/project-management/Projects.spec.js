@@ -216,4 +216,6 @@ test("delete project test", async ({ page }) => {
 });
 
 // invalid scenarios (on inputs when creating project)
-test("empty project input", async ({ page }) => {});
+test("empty project input", async ({ page }) => {
+  console.log(`test`);
+});
