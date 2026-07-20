@@ -1,5 +1,4 @@
 const { test, expect } = require("@playwright/test");
-const { Agent } = require("node:http");
 
 let dashboardTab;
 let projectsTab;
@@ -12,6 +11,7 @@ let descriptionInput;
 let startDate;
 let endDate;
 let createBtn;
+let closeModalBtn;
 
 test.beforeEach(async ({ page }) => {
   // go to register page and create new account
@@ -42,11 +42,10 @@ test.beforeEach(async ({ page }) => {
   startDate = page.locator("[name='start']");
   endDate = page.locator("[name='end']");
   createBtn = page.getByRole("button", { name: "Create" });
+  closeModalBtn = page.getByRole("button", { name: "X" });
 
   // go to projects page
   await projectsTab.click();
-
-  await page.pause();
 
   // check if redirected to projects page page after succesfully logged in
   await expect(page.locator(".header-page-title").filter({ hasText: "Projects Page" })).toBeVisible();
@@ -99,6 +98,36 @@ async function handleDeleteProject(number, page) {
 
   // confirm deleting the project
   await page.getByRole("button", { name: "Yes" }).click();
+}
+
+async function handleValidation(field) {
+  return await field.evaluate((el) => el.validationMessage);
+}
+
+async function handleEmptyInput(name, description, start, end, validation) {
+  // go to In Progress tab
+  await inProgressBtn.click();
+
+  // click on add new project
+  await addProjectBtn.click();
+
+  // fill inputs
+  await nameInput.fill(name);
+  await descriptionInput.fill(description);
+  await startDate.fill(start);
+  await endDate.fill(end);
+
+  // submit button
+  await createBtn.click();
+
+  // define the error message
+  const message = await handleValidation(validation);
+
+  // check if browser error message is present
+  expect(message).toBeTruthy();
+
+  // close the modal
+  await closeModalBtn.click();
 }
 
 // valid scenarios
@@ -201,19 +230,33 @@ test("delete project test", async ({ page }) => {
 
   // create projects
   await handleCreateProject("testOne", "description test", "2026-01-01", "2027-01-01");
+  await handleCreateProject("testTwo", "description test", "2026-01-01", "2027-01-01");
+  await handleCreateProject("testThree", "description test", "2026-01-01", "2027-01-01");
 
   // check the number of projects
-  const projectsNumber = await page.locator(".project-card-container").count();
-  expect(projectsNumber).toBe(1);
+  const projectsNumber = await page.locator(".project-card-container");
+  expect(await projectsNumber.count()).toBe(3);
 
-  console.log(await page.evaluate(() => JSON.stringify(localStorage)));
-
-  // // delete the projects
+  // delete the projects
+  await handleDeleteProject(0, page);
+  await handleDeleteProject(0, page);
   await handleDeleteProject(0, page);
 
   // check if there are 0 projects
-  expect(projectsNumber).toBe(0);
+  await expect(projectsNumber).toHaveCount(0);
 });
 
 // invalid scenarios (on inputs when creating project)
-test("empty project input", async ({ page }) => {});
+test("empty project inputs", async ({ page }) => {
+  // empty project name
+  await handleEmptyInput("", "description test", "2026-01-01", "2027-01-01", nameInput);
+
+  // empty project description
+  await handleEmptyInput("name test", "", "2026-01-01", "2027-01-01", descriptionInput);
+
+  // empty project start
+  await handleEmptyInput("name test", "description test", "", "2027-01-01", startDate);
+
+  // empty project end
+  await handleEmptyInput("name test", "description test", "2026-01-01", "", endDate);
+});
