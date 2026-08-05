@@ -19,4 +19,6 @@ test.beforeAll(async () => {
 
   // get the token
   const token = loginResponseJson.token;
+
+  console.log(`test`);
 });
