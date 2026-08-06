@@ -2,6 +2,8 @@ const { test, expect, request } = require("@playwright/test");
 
 const loginInfo = { userEmail: "daniel@alex.com", userPassword: "Tester135." };
 
+let token;
+
 // login
 test.beforeAll(async () => {
   // create context
@@ -15,10 +17,18 @@ test.beforeAll(async () => {
   // check if the response is 200
   expect(loginResponse.ok()).toBeTruthy();
 
-  const loginResponseJson = loginResponse.json();
+  const loginResponseJson = await loginResponse.json();
 
   // get the token
-  const token = loginResponseJson.token;
+  token = loginResponseJson.token;
+});
 
-  console.log(`test`);
+test("Login", async ({ page }) => {
+  // insert the token to skip authentication
+  await page.addInitScript((value) => {
+    window.localStorage.setItem("token", value);
+  }, token);
+
+  // go to page
+  await page.goto("https://rahulshettyacademy.com/client/");
 });
