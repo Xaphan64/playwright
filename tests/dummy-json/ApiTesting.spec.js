@@ -31,4 +31,6 @@ test("Login", async ({ page }) => {
 
   // go to page
   await page.goto("https://rahulshettyacademy.com/client/");
+
+  console.log(`test`);
 });
