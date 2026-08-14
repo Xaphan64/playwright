@@ -35,28 +35,29 @@ module.exports = defineConfig({
       use: {
         browserName: "chromium",
         screenshot: "on",
+        // trace: "on",
         trace: "retain-on-failure",
         launchOptions: { headless: false },
       },
     },
-    {
-      name: "Firefox",
-      use: {
-        browserName: "firefox",
-        screenshot: "on",
-        trace: "retain-on-failure",
-        launchOptions: { headless: false },
-      },
-    },
-    {
-      name: "WebKit",
-      use: {
-        browserName: "webkit",
-        screenshot: "on",
-        trace: "retain-on-failure",
-        launchOptions: { headless: false },
-      },
-    },
+    // {
+    //   name: "Firefox",
+    //   use: {
+    //     browserName: "firefox",
+    //     screenshot: "on",
+    //     trace: "retain-on-failure",
+    //     launchOptions: { headless: false },
+    //   },
+    // },
+    // {
+    //   name: "WebKit",
+    //   use: {
+    //     browserName: "webkit",
+    //     screenshot: "on",
+    //     trace: "retain-on-failure",
+    //     launchOptions: { headless: false },
+    //   },
+    // },
     // mobile viewports using devices
     // {
     //   name: "Mobile Chrome",
