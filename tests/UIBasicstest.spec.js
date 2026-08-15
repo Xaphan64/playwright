@@ -7,6 +7,15 @@ test("Tutorial App", async ({ browser }) => {
   // creates a new page (tab)
   const page = await context.newPage();
 
+  // remove css from the page
+  page.route("**/*.css", (route) => route.abort());
+
+  // remove the image
+  page.route("**/*.{jpg, png, jpeg}", (route) => route.abort());
+
+  page.on("request", (request) => console.log(request.url()));
+  page.waitForNavigation("response", (response) => console.log(response.url(), response.status()));
+
   // elements
   const username = page.locator("#username");
   const password = page.locator("[type='password']");
@@ -42,8 +51,6 @@ test("Tutorial App", async ({ browser }) => {
 });
 
 test("UI Controls", async ({ page }) => {
-  await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
-
   // elements
   const username = page.locator("#username");
   const password = page.locator("[type='password']");
