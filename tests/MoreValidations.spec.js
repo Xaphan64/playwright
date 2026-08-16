@@ -41,7 +41,7 @@ test("Popup validation", async ({ page }) => {
   // iframe selection
 });
 
-test.only("iFrame validation", async ({ page }) => {
+test("iFrame validation", async ({ page }) => {
   // go to webpage
   await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
 
@@ -56,4 +56,32 @@ test.only("iFrame validation", async ({ page }) => {
 
   // split to get the number of subscribers
   console.log(textCheck.split(" ")[1]);
+});
+
+test("Screenshot and Visual comparison", async ({ page }) => {
+  // go to webpage
+  await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
+
+  // check if the item exists
+  await expect(page.locator("#displayed-text")).toBeVisible();
+
+  // take a screenshot to the locator
+  await page.locator("#displayed-text").screenshot({ path: "test-results/screenshots/partialScreenshot.png" });
+
+  // click on button to hide the element
+  await page.locator("#hide-textbox").click();
+
+  // take a screenshot to the whole page
+  await page.screenshot({ path: "test-results/screenshots/screenshot.png" });
+
+  // check if the item was hidden
+  await expect(page.locator("#displayed-text")).toBeHidden();
+});
+
+test("Visual", async ({ page }) => {
+  // go to page
+  await page.goto("https://www.rediff.com");
+
+  // check if the screenshot matches
+  expect(await page.screenshot()).toMatchSnapshot("landing.png");
 });
