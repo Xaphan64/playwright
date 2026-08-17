@@ -58,7 +58,7 @@ test("iFrame validation", async ({ page }) => {
   console.log(textCheck.split(" ")[1]);
 });
 
-test("Screenshot and Visual comparison", async ({ page }) => {
+test("Screenshot", async ({ page }) => {
   // go to webpage
   await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
 
@@ -78,7 +78,7 @@ test("Screenshot and Visual comparison", async ({ page }) => {
   await expect(page.locator("#displayed-text")).toBeHidden();
 });
 
-test("Visual", async ({ page }) => {
+test("Visual comparison", async ({ page }) => {
   // go to page
   await page.goto("https://www.rediff.com");
 
