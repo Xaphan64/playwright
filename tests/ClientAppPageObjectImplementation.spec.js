@@ -1,14 +1,14 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../pageobjects/LoginPage";
-import { DashboardPage } from "../pageobjects/DashboardPage";
+import { POManager } from "../pageobjects/POManager";
 
 test("client app login", async ({ page }) => {
+  const poManager = new POManager(page);
   const email = "daniel@alex.com";
   const password = "Tester135.";
   const productName = "ZARA COAT 3";
 
-  const loginPage = new LoginPage(page);
-  const dashboardPage = new DashboardPage(page);
+  const loginPage = poManager.getLoginPage();
+  const dashboardPage = poManager.getDashboardPage();
 
   await loginPage.goTo();
   await loginPage.validLogin(email, password);
