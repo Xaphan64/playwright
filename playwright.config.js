@@ -35,9 +35,13 @@ module.exports = defineConfig({
       use: {
         browserName: "chromium",
         screenshot: "on",
+        video: "retain-on-failure",
         // trace: "on",
         trace: "retain-on-failure",
         launchOptions: { headless: false },
+        viewport: { width: 1920, height: 1080 },
+        ignoreHTTPSErrors: true,
+        permissions: ["geolocation"],
       },
     },
     // {
@@ -59,13 +63,13 @@ module.exports = defineConfig({
     //   },
     // },
     // mobile viewports using devices
-    // {
-    //   name: "Mobile Chrome",
-    //   use: { ...devices["Pixel 5"] },
-    // },
-    // {
-    //   name: "Mobile Safari",
-    //   use: { ...devices["iPhone 13"] },
-    // },
+    //   {
+    //     name: "Mobile Chrome",
+    //     use: { ...devices["Pixel 5"], launchOptions: { headless: false } },
+    //   },
+    //   {
+    //     name: "Mobile Safari",
+    //     use: { ...devices["iPhone 13"], launchOptions: { headless: false } },
+    //   },
   ],
 });
