@@ -4,7 +4,9 @@ import { POManager } from "../pageobjects/POManager";
 import testData from "./../utils/placeorderTestData.json";
 
 for (const data of testData) {
-  test(`Client App login ${data.productName}`, async ({ page }) => {
+  // use @Web then npx playwright test --grep @Web to run only test with @Web tag
+
+  test(`@Web Client App login ${data.productName}`, async ({ page }) => {
     const poManager = new POManager(page);
     //js file- Login js, DashboardPage
     const loginPage = poManager.getLoginPage();

@@ -1,6 +1,7 @@
 import test, { expect } from "@playwright/test";
 
-test("security test request intercept", async ({ page }) => {
+// use @Web then npx playwright test --grep @Web to run only test with @Web tag
+test("@Web security test request intercept", async ({ page }) => {
   // go to page
   await page.goto("https://rahulshettyacademy.com/client/");
 

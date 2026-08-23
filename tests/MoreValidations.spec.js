@@ -1,5 +1,8 @@
 const { test, expect } = require("@playwright/test");
 
+// test from this page will run in paralell
+test.describe.configure({ mode: "parallel" });
+
 test("Back forward navigation", async ({ page }) => {
   // go to webpage
   await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
