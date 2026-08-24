@@ -23,11 +23,13 @@ import { defineConfig, devices } from "@playwright/test";
 
 // module.exports = config;
 
-module.exports = defineConfig({
+file: module.exports = defineConfig({
   testDir: "./tests",
   timeout: 20 * 1000,
   expect: { timeout: 5000 },
   reporter: "html",
+  retries: 1, // if the test fail it will retry 1 time
+  workers: 1, // test will run only one after another (if you put 3 it will run 3 tests in paralel)
 
   projects: [
     {

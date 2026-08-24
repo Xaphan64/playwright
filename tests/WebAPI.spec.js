@@ -37,7 +37,7 @@ test.beforeAll(async () => {
   orderId = orderResponseJson.orders[0];
 });
 
-test("Login", async ({ page }) => {
+test("@API Login", async ({ page }) => {
   // insert the token to skip authentication
   await page.addInitScript((value) => {
     window.localStorage.setItem("token", value);
