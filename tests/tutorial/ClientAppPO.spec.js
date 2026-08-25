@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
-import { customtest } from "../utils/test-base";
-import { POManager } from "../pageobjects/POManager";
-import testData from "./../utils/placeorderTestData.json";
+import { customtest } from "../../utils/test-base";
+import { POManager } from "../../pageobjects/POManager";
+import testData from "../../utils/placeorderTestData.json";
 
 for (const data of testData) {
   // use @Web then npx playwright test --grep @Web to run only test with @Web tag
