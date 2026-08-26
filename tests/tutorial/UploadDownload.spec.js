@@ -73,6 +73,4 @@ test("Upload download excel validation", async ({ page }) => {
 
   // check if value was modified
   await expect(desiredRow.locator("#cell-4-undefined")).toContainText(updateValue.toString());
-
-  console.log(`test`);
 });
