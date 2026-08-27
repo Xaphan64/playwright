@@ -11,7 +11,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "allure-commandline": "^2.43.0",
@@ -19,6 +18,7 @@
     "typescript": "^7.0.2"
   },
   "dependencies": {
+    "@cucumber/cucumber": "^12.9.0",
     "exceljs": "^4.4.0"
   }
 }
