@@ -1,6 +1,8 @@
 // module.exports = { default: "--publish-quiet" };
 export default {
   default: {
-    import: ["features/step_definitions/**/*.js"],
+    paths: ["features/**/*.feature"],
+    import: ["features/support/**/*.js", "features/step_definitions/**/*.js"],
+    format: ["progress"],
   },
 };
