@@ -1,6 +1,6 @@
-const { test, expect } = require("@playwright/test");
+import { expect } from "@playwright/test";
 
-class Page {
+class BasePage {
   constructor(page) {
     this.page = page;
   }
@@ -10,7 +10,7 @@ class Page {
   }
 }
 
-export class Register extends Page {
+export class Register extends BasePage {
   constructor(page) {
     super(page);
 
@@ -30,7 +30,7 @@ export class Register extends Page {
   }
 }
 
-export class Login extends Page {
+export class Login extends BasePage {
   constructor(page) {
     super(page);
 
@@ -42,7 +42,7 @@ export class Login extends Page {
   }
 }
 
-export class Persons extends Page {
+export class Persons extends BasePage {
   constructor(page) {
     super(page);
 
@@ -112,7 +112,7 @@ export class Persons extends Page {
   }
 }
 
-export class Projects extends Page {
+export class Projects extends BasePage {
   constructor(page) {
     super(page);
 

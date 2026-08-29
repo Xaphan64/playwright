@@ -1,4 +1,4 @@
-const { test, expect, request } = require("@playwright/test");
+import { test, expect, request } from "@playwright/test";
 
 // login
 const loginPayLoad = { userEmail: "daniel@alex.com", userPassword: "Tester135." };

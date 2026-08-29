@@ -1,14 +1,14 @@
-const { test, expect } = require("@playwright/test");
-import { Login, Persons, Register } from "./Elements";
+import { test, expect } from "@playwright/test";
+import { PageManager } from "./PageManager";
 
 let login;
 let register;
 let persons;
 
 test.beforeEach(async ({ page }) => {
-  register = new Register(page);
-  login = new Login(page);
-  persons = new Persons(page);
+  register = new PageManager(page).getRegisterPage();
+  login = new PageManager(page).getLoginPage();
+  persons = new PageManager(page).getPersonsPage();
 
   // go to register page and create new account
   await page.goto("https://project-management-lac.vercel.app/register");

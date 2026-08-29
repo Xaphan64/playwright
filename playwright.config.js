@@ -29,7 +29,7 @@ file: module.exports = defineConfig({
   expect: { timeout: 5000 },
   reporter: "html",
   retries: 1, // if the test fail it will retry 1 time
-  workers: 1, // test will run only one after another (if you put 3 it will run 3 tests in paralel)
+  workers: 3, // test will run only one after another (if you put 3 it will run 3 tests in paralel)
 
   projects: [
     {

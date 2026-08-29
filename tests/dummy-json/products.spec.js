@@ -1,4 +1,4 @@
-const { test, expect, request } = require("@playwright/test");
+import { test, expect } from "@playwright/test";
 
 test("get all products", async ({ request }) => {
   // get the response

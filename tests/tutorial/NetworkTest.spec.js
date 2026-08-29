@@ -1,4 +1,4 @@
-const { test, request } = require("@playwright/test");
+import { test, request } from "@playwright/test";
 const { APIUtils } = require("../../utils/APIUtils");
 
 // // login

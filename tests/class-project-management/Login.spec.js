@@ -1,12 +1,12 @@
-const { test, expect } = require("@playwright/test");
-import { Login, Register } from "./Elements";
+import { test, expect } from "@playwright/test";
+import { PageManager } from "./PageManager";
 
 let login;
 let register;
 
 test.beforeEach(async ({ page }) => {
-  register = new Register(page);
-  login = new Login(page);
+  register = new PageManager(page).getRegisterPage();
+  login = new PageManager(page).getLoginPage();
 
   // navigate to home page
   await page.goto("https://project-management-lac.vercel.app/");
