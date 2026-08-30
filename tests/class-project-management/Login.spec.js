@@ -23,7 +23,7 @@ test.beforeEach(async ({ page }) => {
   await register.registerBtn.click();
 
   // check if redirected to login page after succesfully registered
-  expect(page.locator(".login-header").filter({ hasText: "Login Page" })).toBeVisible();
+  await expect(page.locator(".login-header").filter({ hasText: "Login Page" })).toBeVisible();
 });
 
 // Login valid scenarious
@@ -36,7 +36,7 @@ test("valid scenario", async ({ page }) => {
   await login.loginBtn.click();
 
   // check if redirected to login page after succesfully registered
-  expect(page.locator(".header-logo").filter({ hasText: "PM APP" })).toBeVisible();
+  await expect(page.locator(".header-logo").filter({ hasText: "PM APP" })).toBeVisible();
 });
 
 // invalid scenarios
@@ -79,7 +79,7 @@ test("wrong email", async ({ page }) => {
   await login.loginBtn.click();
 
   // check if browser error message is present
-  expect(login.errorMessage).toBeVisible();
+  await expect(login.errorMessage).toBeVisible();
 });
 
 test("password empty", async ({ page }) => {
@@ -90,7 +90,7 @@ test("password empty", async ({ page }) => {
   // click on submit
   await login.loginBtn.click();
 
-  // define the error message
+  // define the error message0
   const message = await login.handleValidation(login.passField);
 
   // check if browser error message is present
@@ -106,7 +106,7 @@ test("wrong password", async ({ page }) => {
   await login.loginBtn.click();
 
   // check if browser error message is present
-  expect(login.errorMessage).toBeVisible();
+  await expect(login.errorMessage).toBeVisible();
 });
 
 test("wrong password & email", async ({ page }) => {
@@ -118,5 +118,5 @@ test("wrong password & email", async ({ page }) => {
   await login.loginBtn.click();
 
   // check if browser error message is present
-  expect(login.errorMessage).toBeVisible();
+  await expect(login.errorMessage).toBeVisible();
 });

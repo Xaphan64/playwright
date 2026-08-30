@@ -28,7 +28,7 @@ test("valid scenario", async ({ page }) => {
   await register.registerBtn.click();
 
   // check if redirected to login page after succesfully registered
-  expect(page.locator(".login-header").filter({ hasText: "Login Page" })).toBeVisible();
+  await expect(page.locator(".login-header").filter({ hasText: "Login Page" })).toBeVisible();
 });
 
 // Register invalid scenarios
@@ -192,5 +192,5 @@ test("redirect button test", async ({ page }) => {
   await register.redirectBtn.click();
 
   // check if the user was redirected
-  expect(page.locator(".login-header").filter({ hasText: "Login Page" })).toBeVisible();
+  await expect(page.locator(".login-header").filter({ hasText: "Login Page" })).toBeVisible();
 });
