@@ -137,7 +137,7 @@ test("delete project test", async ({ page }) => {
   await projects.handleCreateProject("testThree", "description test", "2026-01-01", "2027-01-01");
 
   // check the number of projects
-  const projectsNumber = await page.locator(".project-card-container");
+  const projectsNumber = page.locator(".project-card-container");
   expect(await projectsNumber.count()).toBe(3);
 
   // delete the projects
