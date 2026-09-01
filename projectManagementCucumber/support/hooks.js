@@ -10,6 +10,7 @@ Before(async function () {
   this.register = this.pageManager.getRegisterPage();
   this.login = this.pageManager.getLoginPage();
   this.projects = this.pageManager.getProjectsPage();
+  this.persons = this.pageManager.getPersonsPage();
 
   // navigate to home page
   await this.page.goto("https://project-management-lac.vercel.app/");
