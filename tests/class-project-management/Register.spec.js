@@ -32,7 +32,7 @@ test("valid scenario", async ({ page }) => {
 });
 
 // Register invalid scenarios
-test("username empty", async ({ page }) => {
+test("username empty", async () => {
   // fill email and password fields
   await register.usernameField.fill("");
   await register.emailField.fill("test@test.com");
@@ -66,7 +66,7 @@ test("email empty", async ({ page }) => {
   expect(message).toBeTruthy();
 });
 
-test("wrong email format", async ({ page }) => {
+test("wrong email format", async () => {
   // fill username and password fields
   await register.usernameField.fill("Daniel");
   await register.emailField.fill("test.com");
@@ -83,7 +83,7 @@ test("wrong email format", async ({ page }) => {
   expect(message).toBeTruthy();
 });
 
-test("empty password", async ({ page }) => {
+test("empty password", async () => {
   // fill username and password fields
   await register.usernameField.fill("Daniel");
   await register.emailField.fill("test@test.com");
@@ -100,7 +100,7 @@ test("empty password", async ({ page }) => {
   expect(message).toBeTruthy();
 });
 
-test("short password", async ({ page }) => {
+test("short password", async () => {
   // fill username and password fields
   await register.usernameField.fill("Daniel");
   await register.emailField.fill("test@test.com");
@@ -114,7 +114,7 @@ test("short password", async ({ page }) => {
   await expect(register.wrongPassError).toBeVisible();
 });
 
-test("no uppercase password", async ({ page }) => {
+test("no uppercase password", async () => {
   // fill username and password fields
   await register.usernameField.fill("Daniel");
   await register.emailField.fill("test@test.com");
@@ -128,7 +128,7 @@ test("no uppercase password", async ({ page }) => {
   await expect(register.wrongPassError).toBeVisible();
 });
 
-test("no loweracse password", async ({ page }) => {
+test("no loweracse password", async () => {
   // fill username and password fields
   await register.usernameField.fill("Daniel");
   await register.emailField.fill("test@test.com");
@@ -156,7 +156,7 @@ test("no digit password", async ({ page }) => {
   await expect(register.wrongPassError).toBeVisible();
 });
 
-test("empty confirm password", async ({ page }) => {
+test("empty confirm password", async () => {
   // fill username and password fields
   await register.usernameField.fill("Daniel");
   await register.emailField.fill("test@test.com");
@@ -173,7 +173,7 @@ test("empty confirm password", async ({ page }) => {
   expect(message).toBeTruthy();
 });
 
-test("confirm password not the same with password", async ({ page }) => {
+test("confirm password not the same with password", async () => {
   // fill username and password fields
   await register.usernameField.fill("Daniel");
   await register.emailField.fill("test@test.com");

@@ -40,7 +40,7 @@ test("valid scenario", async ({ page }) => {
 });
 
 // invalid scenarios
-test("email empty", async ({ page }) => {
+test("email empty", async () => {
   // all inputs properly completed
   await login.emailField.fill("");
   await login.passField.fill("Tester135.");
@@ -55,7 +55,7 @@ test("email empty", async ({ page }) => {
   expect(message).toBeTruthy();
 });
 
-test("wrong email format", async ({ page }) => {
+test("wrong email format", async () => {
   // all inputs properly completed
   await login.emailField.fill("test.com");
   await login.passField.fill("Tester135.");
@@ -70,7 +70,7 @@ test("wrong email format", async ({ page }) => {
   expect(message).toBeTruthy();
 });
 
-test("wrong email", async ({ page }) => {
+test("wrong email", async () => {
   // all inputs properly completed
   await login.emailField.fill("test@t.com");
   await login.passField.fill("Tester135.");
@@ -82,7 +82,7 @@ test("wrong email", async ({ page }) => {
   await expect(login.errorMessage).toBeVisible();
 });
 
-test("password empty", async ({ page }) => {
+test("password empty", async () => {
   // all inputs properly completed
   await login.emailField.fill("test@test.com");
   await login.passField.fill("");
@@ -97,7 +97,7 @@ test("password empty", async ({ page }) => {
   expect(message).toBeTruthy();
 });
 
-test("wrong password", async ({ page }) => {
+test("wrong password", async () => {
   // all inputs properly completed
   await login.emailField.fill("test@test.com");
   await login.passField.fill("Tester");
@@ -109,7 +109,7 @@ test("wrong password", async ({ page }) => {
   await expect(login.errorMessage).toBeVisible();
 });
 
-test("wrong password & email", async ({ page }) => {
+test("wrong password & email", async () => {
   // all inputs properly completed
   await login.emailField.fill("test@t.com");
   await login.passField.fill("Tester");

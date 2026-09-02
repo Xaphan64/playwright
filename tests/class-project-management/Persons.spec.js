@@ -71,7 +71,7 @@ test("change status test", async ({ page }) => {
   await persons.handleCreatePerson("available", "three", "Backend");
 
   // count available and check
-  const availablePersons = await page.locator(".person-card-container");
+  const availablePersons = page.locator(".person-card-container");
   await expect(availablePersons).toHaveCount(5);
 
   // change first 2 persons to assigned tab
@@ -103,7 +103,7 @@ test("delete person test", async ({ page }) => {
   await persons.handleCreatePerson("available", "two", "Frontend");
 
   // count available and check
-  const availablePersons = await page.locator(".person-card-container");
+  const availablePersons = page.locator(".person-card-container");
   await expect(availablePersons).toHaveCount(4);
 
   // delete the projects
@@ -117,7 +117,7 @@ test("delete person test", async ({ page }) => {
 });
 
 // invalid scenarios (on inputs when creating person)
-test("empty project inputs", async ({ page }) => {
+test("empty project inputs", async () => {
   // empty person position
   await persons.handleEmptyInput("first name test", "last name test", "", persons.personPosition);
 
