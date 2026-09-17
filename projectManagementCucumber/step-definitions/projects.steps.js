@@ -147,5 +147,4 @@ Then("I check the proper error to appear", async function () {
   const message = await this.projects.handleValidation(this.invalidField);
   expect(message).toBeTruthy();
   await this.projects.closeModalBtn.click();
-  console.log(`test`);
 });
